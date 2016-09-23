@@ -95,25 +95,39 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 			}
 
 			var start: Int = 0
+//			if assets.count < 1 {
+//				return // User has no photos
+//			}
+//			
+//			
+//			// case 2: less than 20 photos
+//			if assets.count < 20 {
+//				self.end = 20
+//				start = 0
+//			} else { // case 3: more than 20 photos
+//				self.end += 20
+//				start = self.end - 20
+//			}
+//			
+//			// case 4 reached the end of photos
+//			if self.end > assets.count {
+//				print("reached end of gallery. end: \(self.end)")
+//				self.reachedEndOfPhotos = true
+//				return
+//			}
+			
 			if assets.count < 1 {
-				return // User has no photos
-			}
-			
-			
-			// case 2: less than 20 photos
-			if assets.count < 20 {
-				self.end = 20
+				return
+			} else if assets.count < 20 {
+				self.end = assets.count
 				start = 0
-			} else { // case 3: more than 20 photos
+			} else if self.end > assets.count {
+//				self.end = assets.count
+//				start = self.end - 20
+				self.reachedEndOfPhotos = true
+			} else {
 				self.end += 20
 				start = self.end - 20
-			}
-			
-			// case 4 reached the end of photos
-			if self.end > assets.count {
-				print("reached end of gallery. end: \(self.end)")
-				self.reachedEndOfPhotos = true
-				return
 			}
 			
 			self.gallery = []
@@ -170,16 +184,20 @@ extension HomeController {
 	}
 	
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
-		if (scrollView.contentOffset.y < 0) || reachedEndOfPhotos == true {
+		if reachedEndOfPhotos == true {
+			return
+		}
+		
+		if (scrollView.contentOffset.y < 0) {
 			//reach top
 			indicator.stopAnimating()
 			return
 		}
 		
-		if (scrollView.contentOffset.y - 50) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+		if (scrollView.contentOffset.y - 50) >= (scrollView.contentSize.height - scrollView.frame.size.height) && (reachedEndOfPhotos == false){
 			//bottom reached
-			fetchPhotosFromLibrary()
-			scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+//			fetchPhotosFromLibrary()
+//			scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
 		}
 	}
 }
