@@ -11,7 +11,7 @@ import Photos
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 	
-	private let cellId = "cellId"
+	fileprivate let cellId = "cellId"
 	var gallery: [UIImage] = [UIImage]()
 	var end: Int = 1
 	var count = 0
@@ -21,15 +21,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 		super.viewDidLoad()
 		fetchPhotosFromLibrary(10)
 		
-		collectionView?.backgroundColor = UIColor.whiteColor()
-		collectionView?.registerClass(PhotoCell.self, forCellWithReuseIdentifier: cellId)
+		collectionView?.backgroundColor = UIColor.white
+		collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: cellId)
 		setUpIndicator()
 	}
 	
 	let indicator: UIActivityIndicatorView = {
 		let view = UIActivityIndicatorView()
 		view.clipsToBounds = true
-		view.activityIndicatorViewStyle = .WhiteLarge
+		view.activityIndicatorViewStyle = .whiteLarge
 		view.hidesWhenStopped = true
 		view.backgroundColor = UIColor(white: 0, alpha: 0.7)
 		view.translatesAutoresizingMaskIntoConstraints = false
@@ -41,56 +41,56 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 		self.view.addSubview(indicator)
 		
 		// x, y, width, height
-		indicator.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
-		indicator.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
-		indicator.widthAnchor.constraintEqualToConstant(64).active = true
-		indicator.heightAnchor.constraintEqualToConstant(64).active = true
+		indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+		indicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
+		indicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
 		
 	}
 	
-	private func deletePhotoAtIndex(index: Int, cell: PhotoCell) {
+	fileprivate func deletePhotoAtIndex(_ index: Int, cell: PhotoCell) {
 		let fetchOptions: PHFetchOptions = PHFetchOptions()
 		fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-		let fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
-		let assetToDelete: PHAsset = fetchResult[index] as! PHAsset
+		let fetchResult = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: fetchOptions)
+		let assetToDelete: PHAsset = fetchResult[index] 
 		let arrayToDelete = NSArray(object: assetToDelete)
 		
-		PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+		PHPhotoLibrary.shared().performChanges({
 			PHAssetChangeRequest.deleteAssets(arrayToDelete)
 		}) { (success, error) in
 			if error != nil {
 				print(error)  // Clicked Don't Allow
 			} else {
-				dispatch_async(dispatch_get_main_queue(), {
-					if let indexPath = self.collectionView?.indexPathForCell(cell) {
-						self.gallery.removeAtIndex(indexPath.item)
-						self.collectionView?.deleteItemsAtIndexPaths([indexPath])
+				DispatchQueue.main.async(execute: {
+					if let indexPath = self.collectionView?.indexPath(for: cell) {
+						self.gallery.remove(at: (indexPath as NSIndexPath).item)
+						self.collectionView?.deleteItems(at: [indexPath])
 					}
 				})
 			}
 		}
 	}
 	
-	func fetchPhotosFromLibrary(number: Int = 20) {
+	func fetchPhotosFromLibrary(_ number: Int = 20) {
 		if reachedEndOfPhotos == true {
 			indicator.stopAnimating()
 			return
 		}
 		
 		indicator.startAnimating()
-		dispatch_async(dispatch_get_main_queue()) {
+		DispatchQueue.main.async {
 			
 			let imageManager = PHImageManager()
 			let requestOptions = PHImageRequestOptions()
 			let fetchOptions = PHFetchOptions()
 			
-			requestOptions.synchronous = true
-			requestOptions.deliveryMode = .HighQualityFormat
+			requestOptions.isSynchronous = true
+			requestOptions.deliveryMode = .highQualityFormat
 			
 			// ascending false to show the most recent photos first
 			fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
 			
-			guard let assets: PHFetchResult = PHAsset.fetchAssetsWithMediaType(.Image, options: fetchOptions) else {
+			guard let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions) else {
 				return
 			}
 
@@ -132,7 +132,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 			
 			self.gallery = []
 			for i in start..<self.end {
-				imageManager.requestImageForAsset(assets[i] as! PHAsset, targetSize: self.view.frame.size, contentMode: .AspectFill, options: requestOptions, resultHandler: { (image, _) in
+				imageManager.requestImage(for: assets[i] , targetSize: self.view.frame.size, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, _) in
 					if let picture = image {
 						self.gallery.append(picture)
 					}
@@ -143,8 +143,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 		}
 	}
 	
-	func handleSwipe(sender: UISwipeGestureRecognizer) {
-		guard let cell = sender.view as? PhotoCell, index = collectionView?.indexPathForCell(cell)!.item else {
+	func handleSwipe(_ sender: UISwipeGestureRecognizer) {
+		guard let cell = sender.view as? PhotoCell, let index = collectionView?.indexPath(for: cell)?.item else {
 			return
 		}
 		
@@ -154,36 +154,36 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 }
 
 extension HomeController {
-	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
 	
-	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return gallery.count
 	}
 	
-	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! PhotoCell
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoCell
 		
-		cell.thumbnailImageView.image = gallery[indexPath.item]
+		cell.thumbnailImageView.image = gallery[(indexPath as NSIndexPath).item]
 		
 		// Add gestures
 		let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipe(_:)))
-		swipeRight.direction = .Right
+		swipeRight.direction = .right
 		cell.addGestureRecognizer(swipeRight)
 		
 		return cell
 	}
 	
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-		return CGSizeMake(view.frame.width, view.frame.height / 2 - 40)
+	@objc(collectionView:layout:sizeForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: view.frame.width, height: view.frame.height / 2 - 40)
 	}
 	
-	override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+	override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
 		return false
 	}
 	
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		if reachedEndOfPhotos == true {
 			return
 		}

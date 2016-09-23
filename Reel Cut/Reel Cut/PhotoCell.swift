@@ -14,7 +14,7 @@ class PhotoCell: UICollectionViewCell {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		//		imageView.contentMode = .ScaleToFill
-		imageView.contentMode = UIViewContentMode.ScaleAspectFit
+		imageView.contentMode = UIViewContentMode.scaleAspectFit
 		return imageView
 	}()
 	
@@ -27,10 +27,10 @@ class PhotoCell: UICollectionViewCell {
 		addSubview(thumbnailImageView)
 		
 		// need x, y, width, and height
-		thumbnailImageView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
-		thumbnailImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
-		thumbnailImageView.widthAnchor.constraintEqualToAnchor(self.widthAnchor, constant: -8).active = true
-		thumbnailImageView.heightAnchor.constraintEqualToAnchor(self.heightAnchor, constant: -8).active = true
+		thumbnailImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+		thumbnailImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+		thumbnailImageView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -8).isActive = true
+		thumbnailImageView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -8).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
