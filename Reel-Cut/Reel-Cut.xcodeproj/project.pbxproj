@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C5D11A91D5C457C00A19177 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D11A81D5C457C00A19177 /* AppDelegate.swift */; };
-		8C5D11AB1D5C457C00A19177 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5D11AA1D5C457C00A19177 /* HomeController.swift */; };
-		8C5D11B01D5C457C00A19177 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D11AF1D5C457C00A19177 /* Assets.xcassets */; };
-		8C5D11B31D5C457C00A19177 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D11B11D5C457C00A19177 /* LaunchScreen.storyboard */; };
-		8C6264CB1D5D06400032002B /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6264CA1D5D06400032002B /* PhotoCell.swift */; };
+		8C3917531DBE6F3200FB531B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917521DBE6F3200FB531B /* AppDelegate.swift */; };
+		8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917541DBE6F3200FB531B /* CollectionController.swift */; };
+		8C39175D1DBE6F3200FB531B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */; };
+		8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917641DBE708C00FB531B /* PhotoCell.swift */; };
+		8CCD7D9D1DCDA014006DE599 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8C5D11A51D5C457C00A19177 /* Reel Cut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reel Cut.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C5D11A81D5C457C00A19177 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8C5D11AA1D5C457C00A19177 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		8C5D11AF1D5C457C00A19177 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8C5D11B21D5C457C00A19177 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8C5D11B41D5C457C00A19177 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8C6264CA1D5D06400032002B /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		8C39174F1DBE6F3200FB531B /* Reel-Cut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reel-Cut.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C3917521DBE6F3200FB531B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8C3917541DBE6F3200FB531B /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
+		8C39175C1DBE6F3200FB531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8C39175E1DBE6F3200FB531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C3917641DBE708C00FB531B /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8C5D11A21D5C457C00A19177 /* Frameworks */ = {
+		8C39174C1DBE6F3200FB531B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -35,89 +35,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8C5D119C1D5C457C00A19177 = {
+		8C3917461DBE6F3200FB531B = {
 			isa = PBXGroup;
 			children = (
-				8C5D11A71D5C457C00A19177 /* Reel Cut */,
-				8C5D11A61D5C457C00A19177 /* Products */,
+				8C3917511DBE6F3200FB531B /* Reel-Cut */,
+				8C3917501DBE6F3200FB531B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8C5D11A61D5C457C00A19177 /* Products */ = {
+		8C3917501DBE6F3200FB531B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8C5D11A51D5C457C00A19177 /* Reel Cut.app */,
+				8C39174F1DBE6F3200FB531B /* Reel-Cut.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8C5D11A71D5C457C00A19177 /* Reel Cut */ = {
+		8C3917511DBE6F3200FB531B /* Reel-Cut */ = {
 			isa = PBXGroup;
 			children = (
-				8C6264C91D5D03E40032002B /* Controller */,
-				8C6264C81D5D03DE0032002B /* View */,
-				8C5D11A81D5C457C00A19177 /* AppDelegate.swift */,
-				8C5D11AF1D5C457C00A19177 /* Assets.xcassets */,
-				8C5D11B11D5C457C00A19177 /* LaunchScreen.storyboard */,
-				8C5D11B41D5C457C00A19177 /* Info.plist */,
+				8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */,
+				8C3917521DBE6F3200FB531B /* AppDelegate.swift */,
+				8C3917541DBE6F3200FB531B /* CollectionController.swift */,
+				8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */,
+				8C39175E1DBE6F3200FB531B /* Info.plist */,
+				8C3917641DBE708C00FB531B /* PhotoCell.swift */,
 			);
-			path = "Reel Cut";
-			sourceTree = "<group>";
-		};
-		8C6264C81D5D03DE0032002B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				8C6264CA1D5D06400032002B /* PhotoCell.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		8C6264C91D5D03E40032002B /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				8C5D11AA1D5C457C00A19177 /* HomeController.swift */,
-			);
-			name = Controller;
+			path = "Reel-Cut";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8C5D11A41D5C457C00A19177 /* Reel Cut */ = {
+		8C39174E1DBE6F3200FB531B /* Reel-Cut */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C5D11B71D5C457C00A19177 /* Build configuration list for PBXNativeTarget "Reel Cut" */;
+			buildConfigurationList = 8C3917611DBE6F3200FB531B /* Build configuration list for PBXNativeTarget "Reel-Cut" */;
 			buildPhases = (
-				8C5D11A11D5C457C00A19177 /* Sources */,
-				8C5D11A21D5C457C00A19177 /* Frameworks */,
-				8C5D11A31D5C457C00A19177 /* Resources */,
+				8C39174B1DBE6F3200FB531B /* Sources */,
+				8C39174C1DBE6F3200FB531B /* Frameworks */,
+				8C39174D1DBE6F3200FB531B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Reel Cut";
-			productName = "Reel Cut";
-			productReference = 8C5D11A51D5C457C00A19177 /* Reel Cut.app */;
+			name = "Reel-Cut";
+			productName = "Reel-Cut";
+			productReference = 8C39174F1DBE6F3200FB531B /* Reel-Cut.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8C5D119D1D5C457C00A19177 /* Project object */ = {
+		8C3917471DBE6F3200FB531B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = lil9porkchop;
 				TargetAttributes = {
-					8C5D11A41D5C457C00A19177 = {
-						CreatedOnToolsVersion = 7.3;
+					8C39174E1DBE6F3200FB531B = {
+						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = F9J6KGE3KA;
-						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 8C5D11A01D5C457C00A19177 /* Build configuration list for PBXProject "Reel Cut" */;
+			buildConfigurationList = 8C39174A1DBE6F3200FB531B /* Build configuration list for PBXProject "Reel-Cut" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -125,46 +109,46 @@
 				en,
 				Base,
 			);
-			mainGroup = 8C5D119C1D5C457C00A19177;
-			productRefGroup = 8C5D11A61D5C457C00A19177 /* Products */;
+			mainGroup = 8C3917461DBE6F3200FB531B;
+			productRefGroup = 8C3917501DBE6F3200FB531B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8C5D11A41D5C457C00A19177 /* Reel Cut */,
+				8C39174E1DBE6F3200FB531B /* Reel-Cut */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8C5D11A31D5C457C00A19177 /* Resources */ = {
+		8C39174D1DBE6F3200FB531B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C5D11B31D5C457C00A19177 /* LaunchScreen.storyboard in Resources */,
-				8C5D11B01D5C457C00A19177 /* Assets.xcassets in Resources */,
+				8CCD7D9D1DCDA014006DE599 /* Assets.xcassets in Resources */,
+				8C39175D1DBE6F3200FB531B /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8C5D11A11D5C457C00A19177 /* Sources */ = {
+		8C39174B1DBE6F3200FB531B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C5D11AB1D5C457C00A19177 /* HomeController.swift in Sources */,
-				8C6264CB1D5D06400032002B /* PhotoCell.swift in Sources */,
-				8C5D11A91D5C457C00A19177 /* AppDelegate.swift in Sources */,
+				8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */,
+				8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */,
+				8C3917531DBE6F3200FB531B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8C5D11B11D5C457C00A19177 /* LaunchScreen.storyboard */ = {
+		8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8C5D11B21D5C457C00A19177 /* Base */,
+				8C39175C1DBE6F3200FB531B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -172,7 +156,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8C5D11B51D5C457C00A19177 /* Debug */ = {
+		8C39175F1DBE6F3200FB531B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -184,12 +168,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -211,16 +196,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		8C5D11B61D5C457C00A19177 /* Release */ = {
+		8C3917601DBE6F3200FB531B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -232,12 +218,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -253,7 +240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -262,54 +249,54 @@
 			};
 			name = Release;
 		};
-		8C5D11B81D5C457C00A19177 /* Debug */ = {
+		8C3917621DBE6F3200FB531B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "Reel Cut/Info.plist";
+				DEVELOPMENT_TEAM = F9J6KGE3KA;
+				INFOPLIST_FILE = "Reel-Cut/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lil9porkchop.Reel-Cut";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-		8C5D11B91D5C457C00A19177 /* Release */ = {
+		8C3917631DBE6F3200FB531B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "Reel Cut/Info.plist";
+				DEVELOPMENT_TEAM = F9J6KGE3KA;
+				INFOPLIST_FILE = "Reel-Cut/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lil9porkchop.Reel-Cut";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8C5D11A01D5C457C00A19177 /* Build configuration list for PBXProject "Reel Cut" */ = {
+		8C39174A1DBE6F3200FB531B /* Build configuration list for PBXProject "Reel-Cut" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C5D11B51D5C457C00A19177 /* Debug */,
-				8C5D11B61D5C457C00A19177 /* Release */,
+				8C39175F1DBE6F3200FB531B /* Debug */,
+				8C3917601DBE6F3200FB531B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8C5D11B71D5C457C00A19177 /* Build configuration list for PBXNativeTarget "Reel Cut" */ = {
+		8C3917611DBE6F3200FB531B /* Build configuration list for PBXNativeTarget "Reel-Cut" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C5D11B81D5C457C00A19177 /* Debug */,
-				8C5D11B91D5C457C00A19177 /* Release */,
+				8C3917621DBE6F3200FB531B /* Debug */,
+				8C3917631DBE6F3200FB531B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8C5D119D1D5C457C00A19177 /* Project object */;
+	rootObject = 8C3917471DBE6F3200FB531B /* Project object */;
 }

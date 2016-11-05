@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8C5D11A41D5C457C00A19177"
-               BuildableName = "Reel Cut.app"
-               BlueprintName = "Reel Cut"
-               ReferencedContainer = "container:Reel Cut.xcodeproj">
+               BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
+               BuildableName = "Reel-Cut.app"
+               BlueprintName = "Reel-Cut"
+               ReferencedContainer = "container:Reel-Cut.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C5D11A41D5C457C00A19177"
-            BuildableName = "Reel Cut.app"
-            BlueprintName = "Reel Cut"
-            ReferencedContainer = "container:Reel Cut.xcodeproj">
+            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
+            BuildableName = "Reel-Cut.app"
+            BlueprintName = "Reel-Cut"
+            ReferencedContainer = "container:Reel-Cut.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C5D11A41D5C457C00A19177"
-            BuildableName = "Reel Cut.app"
-            BlueprintName = "Reel Cut"
-            ReferencedContainer = "container:Reel Cut.xcodeproj">
+            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
+            BuildableName = "Reel-Cut.app"
+            BlueprintName = "Reel-Cut"
+            ReferencedContainer = "container:Reel-Cut.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C5D11A41D5C457C00A19177"
-            BuildableName = "Reel Cut.app"
-            BlueprintName = "Reel Cut"
-            ReferencedContainer = "container:Reel Cut.xcodeproj">
+            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
+            BuildableName = "Reel-Cut.app"
+            BlueprintName = "Reel-Cut"
+            ReferencedContainer = "container:Reel-Cut.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
