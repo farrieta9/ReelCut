@@ -100,6 +100,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         swipeLeftGesture.direction = .left
         cell.addGestureRecognizer(swipeRightGesture)
         cell.addGestureRecognizer(swipeLeftGesture)
+        cell.collectionController = self
         
         return cell
     }
@@ -165,7 +166,73 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         indicator.stopAnimating()
         
     }
+    
+    
+    var startingFrame: CGRect?
+    var blackBackGroundView: UIView?
+    var startingImageView: UIImageView?
+    
+    func performZoomInForStartingImageView(startingImageView: UIImageView) {
+        
+        self.startingImageView = startingImageView
+        self.startingImageView?.isHidden = true
+        startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
+        let zoomingImageView = UIImageView(frame: startingFrame!)
+        
+        
+        zoomingImageView.image = startingImageView.image
+        zoomingImageView.isUserInteractionEnabled = true
+        zoomingImageView.contentMode = .scaleAspectFit
+        zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+            blackBackGroundView = UIView(frame: keyWindow.frame)
+            blackBackGroundView?.backgroundColor = .black
+            blackBackGroundView?.alpha = 0
+            
+            keyWindow.addSubview(blackBackGroundView!)
+            keyWindow.addSubview(zoomingImageView)
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.blackBackGroundView!.alpha = 1
+                
+                // Make the image fill up the screen
+                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
+                zoomingImageView.center = keyWindow.center
+                
+            }, completion: nil)
+        }
+    }
+    
+    func handleZoomOut(tapGesture: UITapGestureRecognizer) {
+        if let zoomOutImageView = tapGesture.view {
+            // need to animate back to controller
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+                zoomOutImageView.frame = self.startingFrame!
+                self.blackBackGroundView?.alpha = 0
+
+            }, completion: { (completed: Bool) in
+                zoomOutImageView.removeFromSuperview()
+                self.startingImageView?.isHidden = false
+            })
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

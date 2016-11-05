@@ -11,10 +11,14 @@ import UIKit
 
 class PhotoCell: UICollectionViewCell {
     
-    let imageView: UIImageView = {
+    var collectionController: CollectionController?
+    
+    lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
         return iv;
     }()
     
@@ -27,6 +31,13 @@ class PhotoCell: UICollectionViewCell {
         imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+    }
+    
+    func handleZoomTap(tapGesture: UITapGestureRecognizer) {
+        if let imageView = tapGesture.view as? UIImageView {
+            self.collectionController?.performZoomInForStartingImageView(startingImageView: imageView)
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
