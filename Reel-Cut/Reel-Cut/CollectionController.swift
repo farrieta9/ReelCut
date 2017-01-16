@@ -26,12 +26,32 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         return view
     }()
     
+    let permissionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Need access to photos to use app"
+        label.textAlignment = .center
+        label.isHidden = true
+        label.textColor = UIColor(white: 0.1, alpha: 0.5)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
         collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: photoCellId)
+        setupView()
         setUpIndicator()
         checkPhotoLibraryPermission()
+    }
+    
+    private func setupView() {
+        collectionView?.addSubview(permissionLabel)
+        
+        permissionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        permissionLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        permissionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     func setUpIndicator() {
@@ -54,7 +74,9 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             
         case .denied, .restricted:
             print("denied or restricted. Ask user to give permission")
+            permissionLabel.isHidden = false
             break
+            
         case .notDetermined:
             askForPermissionToPhotoLibrary()
             break
@@ -218,15 +240,17 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             })
         }
     }
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            print("bottom")
+        }
+        
+        if (scrollView.contentOffset.y < 0){
+            print("top")
+        }
+    }
 }
-
-
-
-
-
-
-
-
 
 
 
