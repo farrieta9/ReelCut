@@ -14,6 +14,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     private let photoCellId = "photoCellId"
     var gallery = [UIImage]()
     var upperBound: Int = 50
+    var lowerBound: Int = 50
     
     let indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
@@ -144,7 +145,6 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
                 if success {
                     // user clicked on Allow
                     DispatchQueue.main.async {
-                        
                         self.gallery.remove(at: indexPath.item)
                         self.collectionView?.deleteItems(at: [indexPath])
                     }
@@ -159,7 +159,12 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     
     func fetchPhotos(_ quantity: Int) {
         
+        if upperBound < 0 {
+            upperBound =  quantity
+        }
+        
         indicator.startAnimating()
+        gallery.removeAll()
         let imageManager = PHImageManager()
         let requestOptions = PHImageRequestOptions()
         let fetchOptions = PHFetchOptions()
@@ -170,23 +175,30 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         print(assets.count)
-        
         print(min(assets.count, upperBound))
         
         upperBound = min(assets.count, upperBound)
+        lowerBound = max(0, upperBound - 50)
         
-        for index in 0..<upperBound {
+        if lowerBound < 0 {
+            lowerBound = 0
+            upperBound = min(assets.count, upperBound)
+        }
+        
+        if upperBound < 1 {
+            upperBound = min(assets.count, upperBound + 50)
+        }
+        
+        for index in lowerBound..<upperBound {
             imageManager.requestImage(for: assets[index], targetSize: self.view.frame.size, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, _) in
                 if let image = image {
                     self.gallery.append(image)
                 }
             })
-
         }
         
         collectionView?.reloadData()
         indicator.stopAnimating()
-        
     }
     
     
@@ -244,10 +256,14 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             print("bottom")
+            upperBound += 30
+            fetchPhotos(10)
         }
         
         if (scrollView.contentOffset.y < 0){
             print("top")
+            upperBound -= 30
+            fetchPhotos(10)
         }
     }
 }
