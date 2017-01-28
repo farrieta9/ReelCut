@@ -18,6 +18,7 @@ class PhotoCell: UICollectionViewCell {
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
         iv.isUserInteractionEnabled = true
+        iv.clipsToBounds = true
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
         return iv;
     }()
@@ -43,5 +44,4 @@ class PhotoCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 1
         window?.rootViewController = UINavigationController(rootViewController: CollectionController(collectionViewLayout: layout))
         
         return true

@@ -56,7 +56,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     }
 
     func setUpIndicator() {
-        self.view.addSubview(indicator)
+        view.addSubview(indicator)
         
         // x, y, width, height
         indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -119,8 +119,19 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
-        swipeRightGesture.direction = .right
-        swipeLeftGesture.direction = .left
+        
+        cell.removeGestureRecognizer(swipeLeftGesture)
+        cell.removeGestureRecognizer(swipeRightGesture)
+        
+        if UIDevice.current.orientation.isLandscape {
+            swipeRightGesture.direction = .up
+            swipeLeftGesture.direction = .down
+        } else {
+            swipeRightGesture.direction = .right
+            swipeLeftGesture.direction = .left
+        }
+        
+        
         cell.addGestureRecognizer(swipeRightGesture)
         cell.addGestureRecognizer(swipeLeftGesture)
         cell.collectionController = self
@@ -154,7 +165,43 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: (view.frame.height / 2) - 40)
+        let image = gallery[indexPath.item]
+        
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        
+        if UIDevice.current.orientation.isLandscape {
+            if image.size.width < image.size.height {
+                print(image.size.width, image.size.height, view.frame.height, view.frame.width)
+                // picture is potrait
+
+                height = image.size.width / image.size.height * view.frame.width + 80
+                width = (image.size.width - view.frame.width) / image.size.height * view.frame.width
+                
+            } else {
+                // picture is landscape
+                width = view.frame.width
+                height = image.size.height / image.size.width * width
+            }
+            
+            
+        } else {
+            
+            if image.size.width < image.size.height {
+                width = view.frame.width
+                height = view.frame.height / 2 - 40
+                
+            } else {
+                // landscape
+                width = view.frame.width
+                height = image.size.height / image.size.width * width
+            }
+            
+            
+        }
+        
+//        return CGSize(width: view.frame.width, height: (view.frame.height / 2) - 40)
+        return CGSize(width: width, height: height)
     }
     
     func fetchPhotos(_ quantity: Int) {
@@ -197,7 +244,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             })
         }
         
-        collectionView?.reloadData()
+        reloadCollectionView()
         indicator.stopAnimating()
     }
     
@@ -264,6 +311,33 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             print("top")
             upperBound -= 30
             fetchPhotos(10)
+        }
+    }
+    
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.collectionViewLayout.invalidateLayout()
+        let flowLayout = UICollectionViewFlowLayout()
+        
+        if UIDevice.current.orientation.isLandscape {
+            flowLayout.scrollDirection = .horizontal
+        } else {
+            flowLayout.scrollDirection = .vertical
+            
+        }
+        
+        flowLayout.minimumLineSpacing = 1
+        collectionView?.collectionViewLayout = flowLayout
+        
+        if flowLayout.scrollDirection == .vertical {
+            perform(#selector(reloadCollectionView), with: nil, afterDelay: 0.1)
+        }
+        
+    }
+    
+    func reloadCollectionView() {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
         }
     }
 }
