@@ -19,7 +19,8 @@ class PhotoCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFit
         iv.isUserInteractionEnabled = true
         iv.clipsToBounds = true
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
+        // Disabled. Will be implemented again in the future.
+//        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
         return iv;
     }()
     

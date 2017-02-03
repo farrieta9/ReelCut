@@ -47,7 +47,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     private func setupView() {
-        collectionView?.addSubview(permissionLabel)
+        view.addSubview(permissionLabel)
         
         permissionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -70,7 +70,8 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
-            fetchPhotos(10)
+            setUpImageManager()
+            prepareToFetchPhotos(10)
             break
             
         case .denied, .restricted:
@@ -88,7 +89,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         PHPhotoLibrary.requestAuthorization() { (status) -> Void in
             switch status {
                 case .authorized:
-                    self.fetchPhotos(10)
+                    self.prepareToFetchPhotos(10)
                     break
                 
                 case .denied, .restricted: break
@@ -117,23 +118,24 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellId, for: indexPath) as! PhotoCell
         cell.imageView.image = gallery[indexPath.item]
         
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         
         cell.removeGestureRecognizer(swipeLeftGesture)
         cell.removeGestureRecognizer(swipeRightGesture)
         
-        if UIDevice.current.orientation.isLandscape {
-            swipeRightGesture.direction = .up
-            swipeLeftGesture.direction = .down
-        } else {
-            swipeRightGesture.direction = .right
-            swipeLeftGesture.direction = .left
-        }
+        swipeUpGesture.direction = .up
+        swipeDownGesture.direction = .down
+        swipeRightGesture.direction = .right
+        swipeLeftGesture.direction = .left
         
         
         cell.addGestureRecognizer(swipeRightGesture)
         cell.addGestureRecognizer(swipeLeftGesture)
+        cell.addGestureRecognizer(swipeUpGesture)
+        cell.addGestureRecognizer(swipeDownGesture)
         cell.collectionController = self
         
         return cell
@@ -172,9 +174,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         if UIDevice.current.orientation.isLandscape {
             if image.size.width < image.size.height {
-                print(image.size.width, image.size.height, view.frame.height, view.frame.width)
                 // picture is potrait
-
                 height = image.size.width / image.size.height * view.frame.width + 80
                 width = (image.size.width - view.frame.width) / image.size.height * view.frame.width
                 
@@ -204,23 +204,29 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         return CGSize(width: width, height: height)
     }
     
-    func fetchPhotos(_ quantity: Int) {
+    var numberOfPhotosInGallery: Int = 0
+//    var assets: PHFetchResult?
+    var x: Int?
+    
+    var imageManager: PHImageManager?
+    var requestOptions: PHImageRequestOptions?
+    var fetchOptions: PHFetchOptions?
+    
+    private func setUpImageManager() {
+        imageManager = PHImageManager()
+        requestOptions = PHImageRequestOptions()
+        fetchOptions = PHFetchOptions()
         
-        if upperBound < 0 {
-            upperBound =  quantity
-        }
-        
-        indicator.startAnimating()
+        requestOptions?.isSynchronous = true
+        requestOptions?.deliveryMode = .highQualityFormat
+        fetchOptions?.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+    }
+    
+    func fetchPhotos() {
         gallery.removeAll()
-        let imageManager = PHImageManager()
-        let requestOptions = PHImageRequestOptions()
-        let fetchOptions = PHFetchOptions()
-        
-        requestOptions.isSynchronous = true
-        requestOptions.deliveryMode = .highQualityFormat
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
         print(assets.count)
         print(min(assets.count, upperBound))
         
@@ -237,7 +243,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         }
         
         for index in lowerBound..<upperBound {
-            imageManager.requestImage(for: assets[index], targetSize: self.view.frame.size, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, _) in
+            imageManager?.requestImage(for: assets[index], targetSize: self.view.frame.size, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, _) in
                 if let image = image {
                     self.gallery.append(image)
                 }
@@ -246,6 +252,17 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         reloadCollectionView()
         indicator.stopAnimating()
+        
+    }
+    
+    func prepareToFetchPhotos(_ quantity: Int) {
+        
+        if upperBound < 0 {
+            upperBound =  quantity
+        }
+        
+        indicator.startAnimating()
+        perform(#selector(fetchPhotos), with: nil, afterDelay: 0.1)
     }
     
     
@@ -301,22 +318,43 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-            print("bottom")
-            upperBound += 30
-            fetchPhotos(10)
-        }
         
-        if (scrollView.contentOffset.y < 0){
-            print("top")
-            upperBound -= 30
-            fetchPhotos(10)
+//        if UIApplication.shared.statusBarOrientation.isLandscape {
+//            
+//            if scrollView.contentOffset.x <= 0 {
+//                // reached far left aka 'up' so load most recent photos
+//                print("far left")
+//                upperBound -= 30
+//                prepareToFetchPhotos(10)
+//            }
+//            
+//            if Int(scrollView.contentOffset.x) >= Int(scrollView.contentSize.width - scrollView.frame.size.width) {
+//                // reached far right aka 'bottom' so load older photos
+//                print("far right")
+//                upperBound += 30
+//                prepareToFetchPhotos(10)
+//            }
+//            
+//        }
+        if UIApplication.shared.statusBarOrientation.isPortrait {
+            if Int(scrollView.contentOffset.y) >= Int((scrollView.contentSize.height - scrollView.frame.size.height)) {
+                print("bottom")
+                upperBound += 30
+                prepareToFetchPhotos(10)
+            }
+                
+            if (scrollView.contentOffset.y < 0){
+                print("top")
+                upperBound -= 30
+                prepareToFetchPhotos(10)
+            }
         }
     }
     
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        collectionView?.collectionViewLayout.invalidateLayout()
+//        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionViewLayout.invalidateLayout()
         let flowLayout = UICollectionViewFlowLayout()
         
         if UIDevice.current.orientation.isLandscape {
