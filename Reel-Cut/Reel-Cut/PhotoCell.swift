@@ -20,7 +20,7 @@ class PhotoCell: UICollectionViewCell {
         iv.isUserInteractionEnabled = true
         iv.clipsToBounds = true
         // Disabled. Will be implemented again in the future.
-//        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
         return iv;
     }()
     

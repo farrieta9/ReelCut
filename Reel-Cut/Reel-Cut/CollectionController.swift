@@ -16,6 +16,16 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     var upperBound: Int = 50
     var lowerBound: Int = 50
     
+    var startingFrame: CGRect?
+    var blackBackGroundView: UIView?
+    var startingImageView: UIImageView?
+    
+    var numberOfPhotosInGallery: Int = -1
+    
+    var imageManager: PHImageManager?
+    var requestOptions: PHImageRequestOptions?
+    var fetchOptions: PHFetchOptions?
+    
     let indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.clipsToBounds = true
@@ -118,24 +128,15 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellId, for: indexPath) as! PhotoCell
         cell.imageView.image = gallery[indexPath.item]
         
-        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
-        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipeRight(_:)))
         
-        cell.removeGestureRecognizer(swipeLeftGesture)
-        cell.removeGestureRecognizer(swipeRightGesture)
-        
-        swipeUpGesture.direction = .up
-        swipeDownGesture.direction = .down
         swipeRightGesture.direction = .right
         swipeLeftGesture.direction = .left
         
         
         cell.addGestureRecognizer(swipeRightGesture)
         cell.addGestureRecognizer(swipeLeftGesture)
-        cell.addGestureRecognizer(swipeUpGesture)
-        cell.addGestureRecognizer(swipeDownGesture)
         cell.collectionController = self
         
         return cell
@@ -196,21 +197,10 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
                 width = view.frame.width
                 height = image.size.height / image.size.width * width
             }
-            
-            
         }
         
-//        return CGSize(width: view.frame.width, height: (view.frame.height / 2) - 40)
         return CGSize(width: width, height: height)
     }
-    
-    var numberOfPhotosInGallery: Int = 0
-//    var assets: PHFetchResult?
-    var x: Int?
-    
-    var imageManager: PHImageManager?
-    var requestOptions: PHImageRequestOptions?
-    var fetchOptions: PHFetchOptions?
     
     private func setUpImageManager() {
         imageManager = PHImageManager()
@@ -226,6 +216,8 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         gallery.removeAll()
         
         let assets: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
+        numberOfPhotosInGallery = assets.count
         
         print(assets.count)
         print(min(assets.count, upperBound))
@@ -252,7 +244,6 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         reloadCollectionView()
         indicator.stopAnimating()
-        
     }
     
     func prepareToFetchPhotos(_ quantity: Int) {
@@ -261,14 +252,13 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             upperBound =  quantity
         }
         
+        if upperBound > numberOfPhotosInGallery && numberOfPhotosInGallery > 0{
+            return
+        }
+        
         indicator.startAnimating()
         perform(#selector(fetchPhotos), with: nil, afterDelay: 0.1)
-    }
-    
-    
-    var startingFrame: CGRect?
-    var blackBackGroundView: UIView?
-    var startingImageView: UIImageView?
+    }    
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
         
@@ -318,24 +308,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-//        if UIApplication.shared.statusBarOrientation.isLandscape {
-//            
-//            if scrollView.contentOffset.x <= 0 {
-//                // reached far left aka 'up' so load most recent photos
-//                print("far left")
-//                upperBound -= 30
-//                prepareToFetchPhotos(10)
-//            }
-//            
-//            if Int(scrollView.contentOffset.x) >= Int(scrollView.contentSize.width - scrollView.frame.size.width) {
-//                // reached far right aka 'bottom' so load older photos
-//                print("far right")
-//                upperBound += 30
-//                prepareToFetchPhotos(10)
-//            }
-//            
-//        }
+
         if UIApplication.shared.statusBarOrientation.isPortrait {
             if Int(scrollView.contentOffset.y) >= Int((scrollView.contentSize.height - scrollView.frame.size.height)) {
                 print("bottom")
@@ -349,28 +322,6 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
                 prepareToFetchPhotos(10)
             }
         }
-    }
-    
-    
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-//        collectionView?.collectionViewLayout.invalidateLayout()
-        collectionViewLayout.invalidateLayout()
-        let flowLayout = UICollectionViewFlowLayout()
-        
-        if UIDevice.current.orientation.isLandscape {
-            flowLayout.scrollDirection = .horizontal
-        } else {
-            flowLayout.scrollDirection = .vertical
-            
-        }
-        
-        flowLayout.minimumLineSpacing = 1
-        collectionView?.collectionViewLayout = flowLayout
-        
-        if flowLayout.scrollDirection == .vertical {
-            perform(#selector(reloadCollectionView), with: nil, afterDelay: 0.1)
-        }
-        
     }
     
     func reloadCollectionView() {
