@@ -49,10 +49,11 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = UIColor.rgb(red: 246, green: 246, blue: 246)
         collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: photoCellId)
         setupView()
         setUpIndicator()
+        setUpImageManager()
         checkPhotoLibraryPermission()
     }
     
@@ -80,7 +81,6 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
-            setUpImageManager()
             prepareToFetchPhotos(10)
             break
             
@@ -91,6 +91,8 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
             
         case .notDetermined:
             askForPermissionToPhotoLibrary()
+            
+            perform(#selector(prepareToFetchPhotos), with: nil, afterDelay: 0.1)
             break
         }
     }
@@ -258,7 +260,7 @@ class CollectionController: UICollectionViewController, UICollectionViewDelegate
         
         indicator.startAnimating()
         perform(#selector(fetchPhotos), with: nil, afterDelay: 0.1)
-    }    
+    }
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
         

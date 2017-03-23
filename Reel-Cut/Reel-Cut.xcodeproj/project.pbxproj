@@ -11,6 +11,7 @@
 		8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917541DBE6F3200FB531B /* CollectionController.swift */; };
 		8C39175D1DBE6F3200FB531B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */; };
 		8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917641DBE708C00FB531B /* PhotoCell.swift */; };
+		8C68DF681E845E31000C2E90 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68DF671E845E31000C2E90 /* Extension.swift */; };
 		8CCD7D9D1DCDA014006DE599 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 		8C39175C1DBE6F3200FB531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C39175E1DBE6F3200FB531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C3917641DBE708C00FB531B /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		8C68DF671E845E31000C2E90 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +62,7 @@
 				8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */,
 				8C39175E1DBE6F3200FB531B /* Info.plist */,
 				8C3917641DBE708C00FB531B /* PhotoCell.swift */,
+				8C68DF671E845E31000C2E90 /* Extension.swift */,
 			);
 			path = "Reel-Cut";
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 				8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */,
 				8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */,
 				8C3917531DBE6F3200FB531B /* AppDelegate.swift in Sources */,
+				8C68DF681E845E31000C2E90 /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

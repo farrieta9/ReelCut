@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 1
-        window?.rootViewController = UINavigationController(rootViewController: CollectionController(collectionViewLayout: layout))
+//        window?.rootViewController = UINavigationController(rootViewController: CollectionController(collectionViewLayout: layout))
+        window?.rootViewController = CollectionController(collectionViewLayout: layout)
         
         return true
     }
