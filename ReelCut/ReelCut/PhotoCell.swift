@@ -1,32 +1,30 @@
-
 //
 //  PhotoCell.swift
-//  Reel-Cut
+//  ReelCut
 //
-//  Created by Francisco Arrieta on 10/24/16.
-//  Copyright © 2016 lil9porkchop. All rights reserved.
+//  Created by Francisco Arrieta on 6/16/17.
+//  Copyright © 2017 Francisco Arrieta. All rights reserved.
 //
 
 import UIKit
 
 class PhotoCell: UICollectionViewCell {
     
-    var collectionController: CollectionController?
-    
     lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
-        iv.isUserInteractionEnabled = true
         iv.clipsToBounds = true
-        // Disabled. Will be implemented again in the future.
+        iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap)))
-        return iv;
+        return iv
     }()
+    
+    var parentController: RootController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         addSubview(imageView)
         
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -37,7 +35,7 @@ class PhotoCell: UICollectionViewCell {
     
     func handleZoomTap(tapGesture: UITapGestureRecognizer) {
         if let imageView = tapGesture.view as? UIImageView {
-            self.collectionController?.performZoomInForStartingImageView(startingImageView: imageView)
+            self.parentController?.performZoomInForStartingImageView(startingImageView: imageView)
         }
         
     }

@@ -7,27 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C3917531DBE6F3200FB531B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917521DBE6F3200FB531B /* AppDelegate.swift */; };
-		8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917541DBE6F3200FB531B /* CollectionController.swift */; };
-		8C39175D1DBE6F3200FB531B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */; };
-		8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3917641DBE708C00FB531B /* PhotoCell.swift */; };
-		8C68DF681E845E31000C2E90 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68DF671E845E31000C2E90 /* Extension.swift */; };
-		8CCD7D9D1DCDA014006DE599 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */; };
+		8C65EF0C1EE639FC00238393 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C65EF0B1EE639FC00238393 /* AppDelegate.swift */; };
+		8C65EF0E1EE639FC00238393 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C65EF0D1EE639FC00238393 /* RootController.swift */; };
+		8C65EF131EE639FC00238393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C65EF121EE639FC00238393 /* Assets.xcassets */; };
+		8C65EF161EE639FC00238393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C65EF141EE639FC00238393 /* LaunchScreen.storyboard */; };
+		8C9047131EF4F15A008EDEB9 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8C39174F1DBE6F3200FB531B /* Reel-Cut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reel-Cut.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C3917521DBE6F3200FB531B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8C3917541DBE6F3200FB531B /* CollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionController.swift; sourceTree = "<group>"; };
-		8C39175C1DBE6F3200FB531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8C39175E1DBE6F3200FB531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8C3917641DBE708C00FB531B /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
-		8C68DF671E845E31000C2E90 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8C65EF081EE639FC00238393 /* ReelCut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReelCut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C65EF0B1EE639FC00238393 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8C65EF0D1EE639FC00238393 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
+		8C65EF121EE639FC00238393 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8C65EF151EE639FC00238393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8C65EF171EE639FC00238393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8C39174C1DBE6F3200FB531B /* Frameworks */ = {
+		8C65EF051EE639FC00238393 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,74 +35,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8C3917461DBE6F3200FB531B = {
+		8C65EEFF1EE639FC00238393 = {
 			isa = PBXGroup;
 			children = (
-				8C3917511DBE6F3200FB531B /* Reel-Cut */,
-				8C3917501DBE6F3200FB531B /* Products */,
+				8C65EF0A1EE639FC00238393 /* ReelCut */,
+				8C65EF091EE639FC00238393 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8C3917501DBE6F3200FB531B /* Products */ = {
+		8C65EF091EE639FC00238393 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8C39174F1DBE6F3200FB531B /* Reel-Cut.app */,
+				8C65EF081EE639FC00238393 /* ReelCut.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8C3917511DBE6F3200FB531B /* Reel-Cut */ = {
+		8C65EF0A1EE639FC00238393 /* ReelCut */ = {
 			isa = PBXGroup;
 			children = (
-				8CCD7D9C1DCDA014006DE599 /* Assets.xcassets */,
-				8C3917521DBE6F3200FB531B /* AppDelegate.swift */,
-				8C3917541DBE6F3200FB531B /* CollectionController.swift */,
-				8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */,
-				8C39175E1DBE6F3200FB531B /* Info.plist */,
-				8C3917641DBE708C00FB531B /* PhotoCell.swift */,
-				8C68DF671E845E31000C2E90 /* Extension.swift */,
+				8C65EF0B1EE639FC00238393 /* AppDelegate.swift */,
+				8C65EF0D1EE639FC00238393 /* RootController.swift */,
+				8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */,
+				8C65EF121EE639FC00238393 /* Assets.xcassets */,
+				8C65EF141EE639FC00238393 /* LaunchScreen.storyboard */,
+				8C65EF171EE639FC00238393 /* Info.plist */,
 			);
-			path = "Reel-Cut";
+			path = ReelCut;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8C39174E1DBE6F3200FB531B /* Reel-Cut */ = {
+		8C65EF071EE639FC00238393 /* ReelCut */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C3917611DBE6F3200FB531B /* Build configuration list for PBXNativeTarget "Reel-Cut" */;
+			buildConfigurationList = 8C65EF1A1EE639FC00238393 /* Build configuration list for PBXNativeTarget "ReelCut" */;
 			buildPhases = (
-				8C39174B1DBE6F3200FB531B /* Sources */,
-				8C39174C1DBE6F3200FB531B /* Frameworks */,
-				8C39174D1DBE6F3200FB531B /* Resources */,
+				8C65EF041EE639FC00238393 /* Sources */,
+				8C65EF051EE639FC00238393 /* Frameworks */,
+				8C65EF061EE639FC00238393 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Reel-Cut";
-			productName = "Reel-Cut";
-			productReference = 8C39174F1DBE6F3200FB531B /* Reel-Cut.app */;
+			name = ReelCut;
+			productName = ReelCut;
+			productReference = 8C65EF081EE639FC00238393 /* ReelCut.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8C3917471DBE6F3200FB531B /* Project object */ = {
+		8C65EF001EE639FC00238393 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = lil9porkchop;
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Francisco Arrieta";
 				TargetAttributes = {
-					8C39174E1DBE6F3200FB531B = {
-						CreatedOnToolsVersion = 8.0;
+					8C65EF071EE639FC00238393 = {
+						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = F9J6KGE3KA;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 8C39174A1DBE6F3200FB531B /* Build configuration list for PBXProject "Reel-Cut" */;
+			buildConfigurationList = 8C65EF031EE639FC00238393 /* Build configuration list for PBXProject "ReelCut" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -112,47 +109,46 @@
 				en,
 				Base,
 			);
-			mainGroup = 8C3917461DBE6F3200FB531B;
-			productRefGroup = 8C3917501DBE6F3200FB531B /* Products */;
+			mainGroup = 8C65EEFF1EE639FC00238393;
+			productRefGroup = 8C65EF091EE639FC00238393 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8C39174E1DBE6F3200FB531B /* Reel-Cut */,
+				8C65EF071EE639FC00238393 /* ReelCut */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8C39174D1DBE6F3200FB531B /* Resources */ = {
+		8C65EF061EE639FC00238393 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CCD7D9D1DCDA014006DE599 /* Assets.xcassets in Resources */,
-				8C39175D1DBE6F3200FB531B /* LaunchScreen.storyboard in Resources */,
+				8C65EF161EE639FC00238393 /* LaunchScreen.storyboard in Resources */,
+				8C65EF131EE639FC00238393 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8C39174B1DBE6F3200FB531B /* Sources */ = {
+		8C65EF041EE639FC00238393 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C3917551DBE6F3200FB531B /* CollectionController.swift in Sources */,
-				8C3917651DBE708C00FB531B /* PhotoCell.swift in Sources */,
-				8C3917531DBE6F3200FB531B /* AppDelegate.swift in Sources */,
-				8C68DF681E845E31000C2E90 /* Extension.swift in Sources */,
+				8C65EF0E1EE639FC00238393 /* RootController.swift in Sources */,
+				8C9047131EF4F15A008EDEB9 /* PhotoCell.swift in Sources */,
+				8C65EF0C1EE639FC00238393 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8C39175B1DBE6F3200FB531B /* LaunchScreen.storyboard */ = {
+		8C65EF141EE639FC00238393 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8C39175C1DBE6F3200FB531B /* Base */,
+				8C65EF151EE639FC00238393 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -160,11 +156,12 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8C39175F1DBE6F3200FB531B /* Debug */ = {
+		8C65EF181EE639FC00238393 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -179,7 +176,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -201,7 +197,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -211,11 +207,12 @@
 			};
 			name = Debug;
 		};
-		8C3917601DBE6F3200FB531B /* Release */ = {
+		8C65EF191EE639FC00238393 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -230,7 +227,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -246,7 +242,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -255,27 +251,27 @@
 			};
 			name = Release;
 		};
-		8C3917621DBE6F3200FB531B /* Debug */ = {
+		8C65EF1B1EE639FC00238393 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F9J6KGE3KA;
-				INFOPLIST_FILE = "Reel-Cut/Info.plist";
+				INFOPLIST_FILE = ReelCut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lil9porkchop.Reel-Cut";
+				PRODUCT_BUNDLE_IDENTIFIER = lil9porkchop.ReelCut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		8C3917631DBE6F3200FB531B /* Release */ = {
+		8C65EF1C1EE639FC00238393 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F9J6KGE3KA;
-				INFOPLIST_FILE = "Reel-Cut/Info.plist";
+				INFOPLIST_FILE = ReelCut/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lil9porkchop.Reel-Cut";
+				PRODUCT_BUNDLE_IDENTIFIER = lil9porkchop.ReelCut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -284,25 +280,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8C39174A1DBE6F3200FB531B /* Build configuration list for PBXProject "Reel-Cut" */ = {
+		8C65EF031EE639FC00238393 /* Build configuration list for PBXProject "ReelCut" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C39175F1DBE6F3200FB531B /* Debug */,
-				8C3917601DBE6F3200FB531B /* Release */,
+				8C65EF181EE639FC00238393 /* Debug */,
+				8C65EF191EE639FC00238393 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8C3917611DBE6F3200FB531B /* Build configuration list for PBXNativeTarget "Reel-Cut" */ = {
+		8C65EF1A1EE639FC00238393 /* Build configuration list for PBXNativeTarget "ReelCut" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C3917621DBE6F3200FB531B /* Debug */,
-				8C3917631DBE6F3200FB531B /* Release */,
+				8C65EF1B1EE639FC00238393 /* Debug */,
+				8C65EF1C1EE639FC00238393 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8C3917471DBE6F3200FB531B /* Project object */;
+	rootObject = 8C65EF001EE639FC00238393 /* Project object */;
 }

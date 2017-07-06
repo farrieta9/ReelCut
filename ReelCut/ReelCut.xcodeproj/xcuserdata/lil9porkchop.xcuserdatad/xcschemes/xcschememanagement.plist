@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Reel-Cut.xcscheme</key>
+		<key>ReelCut.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>8C39174E1DBE6F3200FB531B</key>
+		<key>8C65EF071EE639FC00238393</key>
 		<dict>
 			<key>primary</key>
 			<true/>

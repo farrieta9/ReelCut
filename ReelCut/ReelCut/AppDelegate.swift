@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Reel-Cut
+//  ReelCut
 //
-//  Created by Francisco Arrieta on 10/24/16.
-//  Copyright © 2016 lil9porkchop. All rights reserved.
+//  Created by Francisco Arrieta on 6/5/17.
+//  Copyright © 2017 Francisco Arrieta. All rights reserved.
 //
 
 import UIKit
@@ -15,14 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
+
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 1
-//        window?.rootViewController = UINavigationController(rootViewController: CollectionController(collectionViewLayout: layout))
-        window?.rootViewController = CollectionController(collectionViewLayout: layout)
+        window?.rootViewController = RootController(collectionViewLayout: layout)
         
         return true
     }

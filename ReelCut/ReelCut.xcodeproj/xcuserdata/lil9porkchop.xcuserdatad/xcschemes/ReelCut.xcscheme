@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
-               BuildableName = "Reel-Cut.app"
-               BlueprintName = "Reel-Cut"
-               ReferencedContainer = "container:Reel-Cut.xcodeproj">
+               BlueprintIdentifier = "8C65EF071EE639FC00238393"
+               BuildableName = "ReelCut.app"
+               BlueprintName = "ReelCut"
+               ReferencedContainer = "container:ReelCut.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
-            BuildableName = "Reel-Cut.app"
-            BlueprintName = "Reel-Cut"
-            ReferencedContainer = "container:Reel-Cut.xcodeproj">
+            BlueprintIdentifier = "8C65EF071EE639FC00238393"
+            BuildableName = "ReelCut.app"
+            BlueprintName = "ReelCut"
+            ReferencedContainer = "container:ReelCut.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,19 +55,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
-            BuildableName = "Reel-Cut.app"
-            BlueprintName = "Reel-Cut"
-            ReferencedContainer = "container:Reel-Cut.xcodeproj">
+            BlueprintIdentifier = "8C65EF071EE639FC00238393"
+            BuildableName = "ReelCut.app"
+            BlueprintName = "ReelCut"
+            ReferencedContainer = "container:ReelCut.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "OS_ACTIVITY_MODE"
-            value = "disable"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -81,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8C39174E1DBE6F3200FB531B"
-            BuildableName = "Reel-Cut.app"
-            BlueprintName = "Reel-Cut"
-            ReferencedContainer = "container:Reel-Cut.xcodeproj">
+            BlueprintIdentifier = "8C65EF071EE639FC00238393"
+            BuildableName = "ReelCut.app"
+            BlueprintName = "ReelCut"
+            ReferencedContainer = "container:ReelCut.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
