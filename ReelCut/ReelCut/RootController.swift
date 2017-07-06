@@ -11,6 +11,7 @@ import Photos
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var timer: Timer? = nil
     var startingFrame: CGRect?
     var blackBackGroundView: UIView?
     var startingImageView: UIImageView?
@@ -189,6 +190,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.permissionLabel.isHidden = false
                 break
             case .authorized:
+                self.loadingIndicator.startAnimating()
                 self.fetchPhotos()
             }
         }
@@ -248,12 +250,10 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         })
     }
     
-//    var timer: NSTimer? = nil
-    var timer: Timer? = nil
     
     func fetchMorePhotos() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.beginLoadingAnimation()
         })
     }
@@ -273,10 +273,11 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 
             }, completion: { (completed: Bool) in
                 self.loadingIndicator.startAnimating()
+                
                 self.images.removeAll()
                 self.assets.removeAll()
-                self.endIndex += 2
-                self.startIndex += 2
+                self.endIndex += 15
+                self.startIndex += 15
                 self.fetchPhotos()
             })
         }
@@ -284,7 +285,10 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func endLoadingAnimation() {
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+        let previousCellIndexPath = IndexPath(item: 15 - 1, section: 0)
+        self.collectionView?.scrollToItem(at: previousCellIndexPath, at: .bottom, animated: false)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.blackBackGroundView?.alpha = 0
         }) { (completed: Bool) in
             self.loadingIndicator.stopAnimating()
@@ -355,23 +359,15 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if Int(scrollView.contentOffset.y) >= Int((scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print("bottom")
-//            upperBound += 30
-//            prepareToFetchPhotos(10)
-//            if !isFetchingPhotos {
-//                
-//            }
             fetchMorePhotos()
-            
         }
         
         if (scrollView.contentOffset.y <= 0.0){
-            print("top")
-//            upperBound -= 30
-//            prepareToFetchPhotos(10)
             addPhotoToTopOfStack()
         }
     }
+    
+    
     
     
     
