@@ -11,6 +11,9 @@ import Photos
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    private let firstOpen = "firstOpen"
+    var shouldScrollToItem: Bool = false
+    var isViewingPhoto: Bool = false
     var timer: Timer? = nil
     var startingFrame: CGRect?
     var blackBackGroundView: UIView?
@@ -63,12 +66,40 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         permissionLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         permissionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
-        askForPermissionToPhotoLibrary()
+        let defaults = UserDefaults.standard
+        
+        if defaults.bool(forKey: firstOpen) {
+            askForPermissionToPhotoLibrary()
+        } else {
+            let alert = UIAlertController(title: "Allow access to photos?", message: "", preferredStyle: .alert)
+            
+            let allowAction = UIAlertAction(title: "Allow", style: .default) { (action) in
+                self.askForPermissionToPhotoLibrary()
+            }
+            
+            let denyAction = UIAlertAction(title: "Deny", style: .default) { (action) in
+                print("Not allowed")
+                self.permissionLabel.isHidden = false
+            }
+            
+            alert.addAction(denyAction)
+            alert.addAction(allowAction)
+            
+            defaults.set(true, forKey: firstOpen)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
         
+        if isViewingPhoto { return }
+        
+        isViewingPhoto = true
         self.startingImageView = startingImageView
         self.startingImageView?.isHidden = true
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
@@ -125,6 +156,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }, completion: { (completed: Bool) in
                 zoomOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
+                self.isViewingPhoto = false
             })
         }
     }
@@ -139,6 +171,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return fetchOptions
     }
     
+    var reachedBottomOfPhotos: Bool = false
+    
     
     private func fetchPhotos() {
 //        beginLoadingAnimation()
@@ -146,12 +180,17 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
-        
         endIndex = min(endIndex, allPhotos.count)
         startIndex = max(0, endIndex - 30) // 30 is endIndex initial value
         
         print(startIndex)
         print(endIndex)
+        
+        if endIndex >= allPhotos.count {
+            reachedBottomOfPhotos = true
+        } else {
+            reachedBottomOfPhotos = false
+        }
         
         DispatchQueue.global(qos: .background).async {
             let imageManager = PHImageManager.default()
@@ -254,6 +293,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func fetchMorePhotos() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+            self.shouldScrollToItem = true
             self.beginLoadingAnimation()
         })
     }
@@ -285,8 +325,10 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func endLoadingAnimation() {
         
-        let previousCellIndexPath = IndexPath(item: 15 - 1, section: 0)
-        self.collectionView?.scrollToItem(at: previousCellIndexPath, at: .bottom, animated: false)
+        if shouldScrollToItem {
+            let previousCellIndexPath = IndexPath(item: 15 - 1, section: 0)
+            self.collectionView?.scrollToItem(at: previousCellIndexPath, at: .bottom, animated: false)
+        }
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.blackBackGroundView?.alpha = 0
@@ -340,14 +382,13 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             
             
         } else {
-            
+            width = view.frame.width
             if image.size.width < image.size.height {
-                width = view.frame.width
-                height = view.frame.height / 2 - 40
+//                height = view.frame.height / 2 - 40
+                height = view.frame.height / 2
                 
             } else {
                 // landscape
-                width = view.frame.width
                 height = image.size.height / image.size.width * width
             }
         }
@@ -359,6 +400,9 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if Int(scrollView.contentOffset.y) >= Int((scrollView.contentSize.height - scrollView.frame.size.height)) {
+            if reachedBottomOfPhotos {
+                return
+            }
             fetchMorePhotos()
         }
         
