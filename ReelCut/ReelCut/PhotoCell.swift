@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 class PhotoCell: UICollectionViewCell {
     
@@ -31,6 +32,17 @@ class PhotoCell: UICollectionViewCell {
     
     var parentController: RootController?
     
+    var asset: PHAsset? = nil {
+        didSet {
+            hdrLabel.isHidden = true
+            if let asset = asset {
+                if asset.mediaSubtypes.contains(PHAssetMediaSubtype.photoHDR) {
+                    hdrLabel.isHidden = false
+                }
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -50,7 +62,6 @@ class PhotoCell: UICollectionViewCell {
         if let imageView = tapGesture.view as? UIImageView {
             self.parentController?.performZoomInForStartingImageView(startingImageView: imageView)
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

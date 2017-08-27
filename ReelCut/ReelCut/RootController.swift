@@ -50,9 +50,11 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        collectionView?.backgroundColor = .white
         
-        collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: cellId)
+        guard let collectionView = collectionView else { return }
+        
+        collectionView.backgroundColor = .white
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         view.addSubview(permissionLabel)
         view.addSubview(loadingIndicator)
@@ -108,7 +110,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         if let selectedImage = startingImageView.image {
             if let index = self.images.index(of: selectedImage) {
-                
+                print("Selected image at index: \(index)")
                 let selectedAsset = assets[index]
                 
                 // request a bigger image
@@ -254,11 +256,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         cell.imageView.image = images[indexPath.item]
         cell.parentController = self
-        cell.hdrLabel.isHidden = true
-        
-        if assets[indexPath.item].mediaSubtypes.contains(PHAssetMediaSubtype.photoHDR) {
-            cell.hdrLabel.isHidden = false
-        }
+        cell.asset = assets[indexPath.item]
         
         return cell
     }
@@ -267,10 +265,15 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         if startIndex <= 0 {
             startIndex = 0
+            print("Already at the top... returning")
             return
         }
         
         startIndex -= 1
+        
+        print("Fetching a photo")
+        print("startIndex = \(startIndex)")
+        
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         let imageManager = PHImageManager.default()
@@ -289,7 +292,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         })
     }
-    
     
     func fetchMorePhotos() {
         timer?.invalidate()
@@ -340,18 +342,23 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     private func deletePhotoAt(indexPath: IndexPath){
         let fetchOptions = PHFetchOptions()
+        
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        
         let fetchResult = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: fetchOptions)
         let assetToDelete: PHAsset = fetchResult[startIndex + indexPath.item]
         let arrayToDelete = NSArray(object: assetToDelete)
+        print("Attempting to delete photo at index: \(indexPath.row)")
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.deleteAssets(arrayToDelete)
         }, completionHandler: { (success, error) in
+            
             if success {
                 print("deleted photo successfully")
                 print("Photos left in display -> \(self.images.count)")
                 DispatchQueue.main.async {
                     self.images.remove(at: indexPath.item)
+                    self.assets.remove(at: indexPath.item)
                     self.collectionView?.deleteItems(at: [indexPath])
                 }
             }
@@ -361,7 +368,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func handleSwipe(gesture: UISwipeGestureRecognizer) {
         guard let cell = gesture.view as? PhotoCell else { return }
         if let indexPath = collectionView?.indexPath(for: cell) {
-            print("deleting index: \(indexPath.row)")
             deletePhotoAt(indexPath: indexPath)
         }
     }
