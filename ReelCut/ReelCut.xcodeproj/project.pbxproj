@@ -12,6 +12,7 @@
 		8C65EF131EE639FC00238393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C65EF121EE639FC00238393 /* Assets.xcassets */; };
 		8C65EF161EE639FC00238393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C65EF141EE639FC00238393 /* LaunchScreen.storyboard */; };
 		8C9047131EF4F15A008EDEB9 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */; };
+		8CBB54591F52804A006FF95D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBB54581F52804A006FF95D /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		8C65EF151EE639FC00238393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C65EF171EE639FC00238393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		8CBB54581F52804A006FF95D /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				8C65EF0B1EE639FC00238393 /* AppDelegate.swift */,
 				8C65EF0D1EE639FC00238393 /* RootController.swift */,
+				8CBB54581F52804A006FF95D /* Extensions.swift */,
 				8C9047121EF4F15A008EDEB9 /* PhotoCell.swift */,
 				8C65EF121EE639FC00238393 /* Assets.xcassets */,
 				8C65EF141EE639FC00238393 /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 				8C65EF0E1EE639FC00238393 /* RootController.swift in Sources */,
 				8C9047131EF4F15A008EDEB9 /* PhotoCell.swift in Sources */,
 				8C65EF0C1EE639FC00238393 /* AppDelegate.swift in Sources */,
+				8CBB54591F52804A006FF95D /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

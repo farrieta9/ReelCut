@@ -20,17 +20,30 @@ class PhotoCell: UICollectionViewCell {
         return iv
     }()
     
+    let hdrLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HDR"
+        label.isHidden = true
+        label.textColor = UIColor.init(r: 100, g: 100, b: 100)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     var parentController: RootController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(imageView)
+        addSubview(hdrLabel)
         
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        
+        hdrLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4).isActive = true
+        hdrLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 4).isActive = true
     }
     
     func handleZoomTap(tapGesture: UITapGestureRecognizer) {

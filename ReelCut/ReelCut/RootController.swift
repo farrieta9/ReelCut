@@ -11,6 +11,7 @@ import Photos
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    private let swipeDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
     private let firstOpen = "firstOpen"
     var shouldScrollToItem: Bool = false
     var isViewingPhoto: Bool = false
@@ -117,7 +118,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 imageManager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .aspectFit, options: nil, resultHandler: { (image, info) in
                     zoomingImageView.image = image
                 })
-                
             }
         }
         
@@ -160,8 +160,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             })
         }
     }
-    
-    
     
     private func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
@@ -245,8 +243,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return images.count
     }
     
-    private let swipeDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoCell
         
@@ -258,6 +254,11 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         cell.imageView.image = images[indexPath.item]
         cell.parentController = self
+        cell.hdrLabel.isHidden = true
+        
+        if assets[indexPath.item].mediaSubtypes.contains(PHAssetMediaSubtype.photoHDR) {
+            cell.hdrLabel.isHidden = false
+        }
         
         return cell
     }
@@ -347,6 +348,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             PHAssetChangeRequest.deleteAssets(arrayToDelete)
         }, completionHandler: { (success, error) in
             if success {
+                print("deleted photo successfully")
+                print("Photos left in display -> \(self.images.count)")
                 DispatchQueue.main.async {
                     self.images.remove(at: indexPath.item)
                     self.collectionView?.deleteItems(at: [indexPath])
@@ -358,6 +361,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func handleSwipe(gesture: UISwipeGestureRecognizer) {
         guard let cell = gesture.view as? PhotoCell else { return }
         if let indexPath = collectionView?.indexPath(for: cell) {
+            print("deleting index: \(indexPath.row)")
             deletePhotoAt(indexPath: indexPath)
         }
     }
