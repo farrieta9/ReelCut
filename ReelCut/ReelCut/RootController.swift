@@ -11,6 +11,7 @@ import Photos
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var didFinishRotatingAppIcon: Bool = false
     private let swipeDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
     private let firstOpen = "firstOpen"
     var shouldScrollToItem: Bool = false
@@ -44,22 +45,60 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return view
     }()
     
+    let reelCutImageView: UIImageView = {
+//        let renderingMode = UIImageRenderingMode.alwaysOriginal
+//        let image = UIImage(named: "reelcut-512x512")?.withRenderingMode(renderingMode)
+//        image = image?.imageRendererFormat
+//        image = image.imageWithRenderingMode(.AlwaysTemplate)
+        
+//        image = image?.withRenderingMode(renderingMode)
+        let image = UIImage(named: "reelcut-512x512")
+        let iv = UIImageView(image: image)
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFit
+//        iv.clipsToBounds = true
+        iv.backgroundColor = UIColor.init(r: 1.0, g: 0, b: 0, alpha: 0.5)
+        return iv
+    }()
+    
+    func rotateAppIcon(duration: CFTimeInterval = 2.0) {
+        
+        if didFinishRotatingAppIcon {
+            return
+        }
+        
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(Double.pi * duration)
+        rotateAnimation.duration = duration
+        
+        reelCutImageView.layer.add(rotateAnimation, forKey: nil)
+    }
+    
     var startIndex: Int = 0
     var endIndex: Int = 30
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         guard let collectionView = collectionView else { return }
-        
+        rotateAppIcon()
         collectionView.backgroundColor = .white
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: cellId)
         
+//        view.addSubview(reelCutImageView)
         view.addSubview(permissionLabel)
         view.addSubview(loadingIndicator)
         
         // x, y, width, height
+//        reelCutImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        reelCutImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+////        reelCutImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+//        reelCutImageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        reelCutImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        
         loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
@@ -183,8 +222,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         endIndex = min(endIndex, allPhotos.count)
         startIndex = max(0, endIndex - 30) // 30 is endIndex initial value
         
-        print(startIndex)
-        print(endIndex)
+        print("Start index -> \(startIndex)")
+        print("End index -> \(endIndex)")
         
         if endIndex >= allPhotos.count {
             reachedBottomOfPhotos = true
@@ -354,15 +393,20 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }, completionHandler: { (success, error) in
             
             if success {
-                print("deleted photo successfully")
-                print("Photos left in display -> \(self.images.count)")
-                DispatchQueue.main.async {
-                    self.images.remove(at: indexPath.item)
-                    self.assets.remove(at: indexPath.item)
-                    self.collectionView?.deleteItems(at: [indexPath])
-                }
+                self.removePhotoFromCacheAt(indexPath: indexPath)
             }
         })
+    }
+    
+    private func removePhotoFromCacheAt(indexPath: IndexPath) {
+        print("deleted photo successfully")
+        DispatchQueue.main.async {
+            self.images.remove(at: indexPath.item)
+            self.assets.remove(at: indexPath.item)
+            self.endIndex -= 1
+            print("Photos left in display -> \(self.images.count)")
+            self.collectionView?.deleteItems(at: [indexPath])
+        }
     }
     
     func handleSwipe(gesture: UISwipeGestureRecognizer) {
@@ -411,6 +455,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if Int(scrollView.contentOffset.y) >= Int((scrollView.contentSize.height - scrollView.frame.size.height)) {
             if reachedBottomOfPhotos {
+                print("reached end of photos")
                 return
             }
             fetchMorePhotos()
