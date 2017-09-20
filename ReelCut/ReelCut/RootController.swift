@@ -11,7 +11,7 @@ import Photos
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var didFinishRotatingAppIcon: Bool = false
+    var isLoadingPhotos: Bool = true
     private let swipeDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
     private let firstOpen = "firstOpen"
     var shouldScrollToItem: Bool = false
@@ -20,6 +20,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     var startingFrame: CGRect?
     var blackBackGroundView: UIView?
     var startingImageView: UIImageView?
+    var startIndex: Int = 0
+    var endIndex: Int = 30
     private let cellId = "cellId"
     var images = [UIImage]()
     var assets = [PHAsset]()
@@ -34,80 +36,57 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return label
     }()
     
-    let loadingIndicator: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView()
-        view.clipsToBounds = true
-        view.activityIndicatorViewStyle = .whiteLarge
-        view.hidesWhenStopped = true
-        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 10
-        return view
-    }()
+//    let loadingIndicator: UIActivityIndicatorView = {
+//        let view = UIActivityIndicatorView()
+//        view.clipsToBounds = true
+//        view.activityIndicatorViewStyle = .whiteLarge
+//        view.hidesWhenStopped = true
+//        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.layer.cornerRadius = 10
+//        
+//        return view
+//    }()
     
     let reelCutImageView: UIImageView = {
-//        let renderingMode = UIImageRenderingMode.alwaysOriginal
-//        let image = UIImage(named: "reelcut-512x512")?.withRenderingMode(renderingMode)
-//        image = image?.imageRendererFormat
-//        image = image.imageWithRenderingMode(.AlwaysTemplate)
-        
-//        image = image?.withRenderingMode(renderingMode)
-        let image = UIImage(named: "reelcut-512x512")
+        let image = UIImage(named: "transparent-reelcut-1000x1000.png")
         let iv = UIImageView(image: image)
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
-//        iv.clipsToBounds = true
-        iv.backgroundColor = UIColor.init(r: 1.0, g: 0, b: 0, alpha: 0.5)
+        iv.clipsToBounds = true
+        iv.isHidden = true
+        iv.backgroundColor = UIColor.init(r: 1.0, g: 0, b: 0, alpha: 0)
         return iv
     }()
     
-    func rotateAppIcon(duration: CFTimeInterval = 2.0) {
-        
-        if didFinishRotatingAppIcon {
-            return
-        }
-        
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.fromValue = 0.0
-        rotateAnimation.toValue = CGFloat(Double.pi * duration)
-        rotateAnimation.duration = duration
-        
-        reelCutImageView.layer.add(rotateAnimation, forKey: nil)
-    }
-    
-    var startIndex: Int = 0
-    var endIndex: Int = 30
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         guard let collectionView = collectionView else { return }
-        rotateAppIcon()
+        
         collectionView.backgroundColor = .white
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: cellId)
         
-//        view.addSubview(reelCutImageView)
+        view.addSubview(reelCutImageView)
         view.addSubview(permissionLabel)
-        view.addSubview(loadingIndicator)
+//        view.addSubview(loadingIndicator)
         
         // x, y, width, height
-//        reelCutImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        reelCutImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-////        reelCutImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//        reelCutImageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-//        reelCutImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        reelCutImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reelCutImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        reelCutImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        reelCutImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
-        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        loadingIndicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
+//        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
+//        loadingIndicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
         permissionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         permissionLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         permissionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        self.startLoadingAnimation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -135,6 +114,29 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    private func rotateViewIndefinitely(targetView: UIView, duration: Double = 1.0) {
+        // Rotate <targetView> indefinitely
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
+            targetView.transform = targetView.transform.rotated(by: CGFloat.pi)
+        }) { finished in
+            
+            if self.isLoadingPhotos {
+                self.rotateViewIndefinitely(targetView: targetView, duration: duration)
+            }
+        }
+    }
+    
+    private func startLoadingAnimation() {
+        isLoadingPhotos = true
+        reelCutImageView.isHidden = false
+        rotateViewIndefinitely(targetView: reelCutImageView)
+    }
+    
+    private func stopLoadingAnimation() {
+        isLoadingPhotos = false
+        reelCutImageView.isHidden = true
     }
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
@@ -268,7 +270,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.permissionLabel.isHidden = false
                 break
             case .authorized:
-                self.loadingIndicator.startAnimating()
+//                self.loadingIndicator.startAnimating()
+                self.startLoadingAnimation()
                 self.fetchPhotos()
             }
         }
@@ -336,11 +339,11 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.shouldScrollToItem = true
-            self.beginLoadingAnimation()
+            self.beginLoadingPhotoAnimation()
         })
     }
     
-    func beginLoadingAnimation() {
+    func beginLoadingPhotoAnimation() {
         
         if let keyWindow = UIApplication.shared.keyWindow {
             
@@ -354,7 +357,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.blackBackGroundView?.alpha = 0.25
                 
             }, completion: { (completed: Bool) in
-                self.loadingIndicator.startAnimating()
+//                self.loadingIndicator.startAnimating()
+                self.startLoadingAnimation()
                 
                 self.images.removeAll()
                 self.assets.removeAll()
@@ -375,7 +379,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.blackBackGroundView?.alpha = 0
         }) { (completed: Bool) in
-            self.loadingIndicator.stopAnimating()
+//            self.loadingIndicator.stopAnimating()
+            self.stopLoadingAnimation()
         }
     }
     
