@@ -58,7 +58,7 @@ class PhotoCell: UICollectionViewCell {
         hdrLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 4).isActive = true
     }
     
-    func handleZoomTap(tapGesture: UITapGestureRecognizer) {
+    @objc func handleZoomTap(tapGesture: UITapGestureRecognizer) {
         if let imageView = tapGesture.view as? UIImageView {
             self.parentController?.performZoomInForStartingImageView(startingImageView: imageView)
         }
@@ -68,3 +68,4 @@ class PhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

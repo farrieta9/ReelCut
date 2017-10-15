@@ -36,17 +36,17 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return label
     }()
     
-//    let loadingIndicator: UIActivityIndicatorView = {
-//        let view = UIActivityIndicatorView()
-//        view.clipsToBounds = true
-//        view.activityIndicatorViewStyle = .whiteLarge
-//        view.hidesWhenStopped = true
-//        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 10
-//        
-//        return view
-//    }()
+    //    let loadingIndicator: UIActivityIndicatorView = {
+    //        let view = UIActivityIndicatorView()
+    //        view.clipsToBounds = true
+    //        view.activityIndicatorViewStyle = .whiteLarge
+    //        view.hidesWhenStopped = true
+    //        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
+    //        view.translatesAutoresizingMaskIntoConstraints = false
+    //        view.layer.cornerRadius = 10
+    //
+    //        return view
+    //    }()
     
     let reelCutImageView: UIImageView = {
         let image = UIImage(named: "transparent-reelcut-1000x1000.png")
@@ -69,7 +69,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         view.addSubview(reelCutImageView)
         view.addSubview(permissionLabel)
-//        view.addSubview(loadingIndicator)
+        //        view.addSubview(loadingIndicator)
         
         // x, y, width, height
         reelCutImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -77,16 +77,15 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         reelCutImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         reelCutImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
-//        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//        loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
-//        loadingIndicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        //        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        //        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        //        loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        //        loadingIndicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
         permissionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         permissionLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         permissionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        self.startLoadingAnimation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -149,22 +148,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
         let zoomingImageView = UIImageView(frame: startingFrame!)
         
-        if let selectedImage = startingImageView.image {
-            if let index = self.images.index(of: selectedImage) {
-                print("Selected image at index: \(index)")
-                let selectedAsset = assets[index]
-                
-                // request a bigger image
-                let imageManager = PHImageManager.default()
-                let targetSize = CGSize(width: 600, height: 600)
-                
-                imageManager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .aspectFit, options: nil, resultHandler: { (image, info) in
-                    zoomingImageView.image = image
-                })
-            }
-        }
-        
-//        zoomingImageView.image = startingImageView.image
+        zoomingImageView.image = startingImageView.image
         zoomingImageView.isUserInteractionEnabled = true
         zoomingImageView.contentMode = .scaleAspectFit
         zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
@@ -188,7 +172,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    func handleZoomOut(tapGesture: UITapGestureRecognizer) {
+    @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
         if let zoomOutImageView = tapGesture.view {
             // need to animate back to controller
             
@@ -206,7 +190,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     private func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
-//        fetchOptions.fetchLimit = 15 // 50 is a good number of photos to display
+        //        fetchOptions.fetchLimit = 15 // 50 is a good number of photos to display
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         return fetchOptions
@@ -216,8 +200,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     private func fetchPhotos() {
-//        beginLoadingAnimation()
-//        loadingIndicator.startAnimating()
+        //        beginLoadingAnimation()
+        //        loadingIndicator.startAnimating()
         
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
@@ -233,19 +217,34 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             reachedBottomOfPhotos = false
         }
         
+//        let indexSet = IndexSet(startIndex...endIndex - 1)
+//        allPhotos.enumerateObjects(at: indexSet, options: .concurrent) { (asset, count, stop) in
+//            let imageManager = PHImageManager.default()
+//            let targetSize = CGSize(width: 10, height: 10)
+//            let options = PHImageRequestOptions()
+//            options.isSynchronous = true
+//            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+//                if let image = image {
+//                    self.images.append(image)
+//                    self.assets.append(asset)
+//                }
+//            })
+//        }
+//        reloadCollectionView()
+        
         DispatchQueue.global(qos: .background).async {
             let imageManager = PHImageManager.default()
-            let targetSize = CGSize(width: 350, height: 350)
+            let targetSize = CGSize(width: 10, height: 10)
             let options = PHImageRequestOptions()
             options.isSynchronous = true
-            
+
             for index in self.startIndex..<self.endIndex {
                 imageManager.requestImage(for: allPhotos[index], targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
                     if let image = image {
                         self.images.append(image)
                         self.assets.append(allPhotos[index])
                     }
-                    
+
                     if index == self.endIndex - 1 {
                         self.reloadCollectionView()
                     }
@@ -253,6 +252,52 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
         }
     }
+    
+    
+    //    private func fetchPhotos() {
+    //
+    //        if isFinishedPaging {
+    //            return
+    //        }
+    //
+    //        let mediaType = PHAssetMediaType.image
+    //        let allPhotos = PHAsset.fetchAssets(with: mediaType, options: assetsFetchOptions())
+    //
+    //        if allPhotos.count <= 0 {
+    //            return
+    //        }
+    //
+    //        endIndex = min(endIndex, allPhotos.count)
+    //
+    //        print("Start index -> \(startIndex) && End index -> \(endIndex)")
+    //
+    //        if endIndex >= allPhotos.count - 1 {
+    //            isFinishedPaging = true
+    //            endIndex = allPhotos.count - 1
+    //        }
+    //
+    //        let indexSet = IndexSet(startIndex...endIndex)
+    //        allPhotos.enumerateObjects(at: indexSet, options: .concurrent) { (asset, count, stop) in
+    //            let imageManager = PHImageManager.default()
+    //            let targetSize = CGSize(width: 10, height: 10)
+    //
+    //            let options = PHImageRequestOptions()
+    //            options.isSynchronous = true
+    //
+    //            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+    //
+    //                if let image = image {
+    //                    self.images.append(image)
+    //                    self.assets.append(asset)
+    //                }
+    //            })
+    //        }
+    //
+    //        DispatchQueue.main.async {
+    //            self.collectionView?.reloadData()
+    //        }
+    //
+    //    }
     
     func reloadCollectionView() {
         DispatchQueue.main.async {
@@ -271,12 +316,11 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 break
             case .authorized:
 //                self.loadingIndicator.startAnimating()
-                self.startLoadingAnimation()
                 self.fetchPhotos()
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -288,6 +332,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoCell
         
         for direction in swipeDirections {
@@ -301,6 +346,22 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         cell.asset = assets[indexPath.item]
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PhotoCell else { return }
+        
+        let selectedAsset = self.assets[indexPath.item]
+        
+        let imageManager = PHImageManager.default()
+        let targetSize = PHImageManagerMaximumSize
+        let options = PHImageRequestOptions()
+        options.isSynchronous = false
+        options.deliveryMode = .highQualityFormat
+        imageManager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+            cell.imageView.image = image
+        })
     }
     
     func addPhotoToTopOfStack() {
@@ -319,9 +380,9 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         let imageManager = PHImageManager.default()
-        let targetSize = CGSize(width: 350, height: 350)
+        let targetSize = CGSize(width: 20, height: 20)
         let options = PHImageRequestOptions()
-        options.isSynchronous = true
+        options.isSynchronous = false
         
         imageManager.requestImage(for: allPhotos[startIndex], targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
             
@@ -329,8 +390,16 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.images.insert(image, at: 0)
                 self.assets.insert(allPhotos[self.startIndex], at: 0)
                 
-                let indexPath = IndexPath(item: 0, section: 0)
-                self.collectionView?.insertItems(at: [indexPath])
+                let indexPathOfTopCell = IndexPath(item: 0, section: 0)
+                self.collectionView?.insertItems(at: [indexPathOfTopCell])
+                
+                self.images.removeLast()
+                self.assets.removeLast()
+                self.endIndex -= 1
+                print("photo count \(self.images.count)")
+                
+                let indexOfBottomCell = IndexPath(item: self.images.count - 1, section: 0)
+                self.collectionView?.deleteItems(at: [indexOfBottomCell])
             }
         })
     }
@@ -351,14 +420,13 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             blackBackGroundView?.backgroundColor = .black
             blackBackGroundView?.alpha = 0
             keyWindow.addSubview(blackBackGroundView!)
-
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+            self.startLoadingAnimation()
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 self.blackBackGroundView?.alpha = 0.25
                 
             }, completion: { (completed: Bool) in
-//                self.loadingIndicator.startAnimating()
-                self.startLoadingAnimation()
+                
                 
                 self.images.removeAll()
                 self.assets.removeAll()
@@ -375,12 +443,12 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             let previousCellIndexPath = IndexPath(item: 15 - 1, section: 0)
             self.collectionView?.scrollToItem(at: previousCellIndexPath, at: .bottom, animated: false)
         }
-        
+        self.stopLoadingAnimation()
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.blackBackGroundView?.alpha = 0
         }) { (completed: Bool) in
-//            self.loadingIndicator.stopAnimating()
-            self.stopLoadingAnimation()
+            //            self.loadingIndicator.stopAnimating()
+   
         }
     }
     
@@ -414,7 +482,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    func handleSwipe(gesture: UISwipeGestureRecognizer) {
+    @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
         guard let cell = gesture.view as? PhotoCell else { return }
         if let indexPath = collectionView?.indexPath(for: cell) {
             deletePhotoAt(indexPath: indexPath)
@@ -443,7 +511,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } else {
             width = view.frame.width
             if image.size.width < image.size.height {
-//                height = view.frame.height / 2 - 40
+                //                height = view.frame.height / 2 - 40
                 height = view.frame.height / 2
                 
             } else {
@@ -470,14 +538,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             addPhotoToTopOfStack()
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
+
 
