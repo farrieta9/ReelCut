@@ -29,7 +29,7 @@ class PhotoCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     var parentController: RootController?
     
     var asset: PHAsset? = nil {
@@ -39,9 +39,20 @@ class PhotoCell: UICollectionViewCell {
                 if asset.mediaSubtypes.contains(PHAssetMediaSubtype.photoHDR) {
                     hdrLabel.isHidden = false
                 }
+                
+//                if let photoAsset = livePhotoAsset {
+//                    PHImageManager.default().requestLivePhoto(for: photoAsset, targetSize: photoView.frame.size, contentMode: .aspectFit, options: nil, resultHandler: { (photo: PHLivePhoto?, info: [AnyHashable : Any]?) in
+//
+//                        if let livePhoto = photo {
+//                            self.photoView.livePhoto = livePhoto
+//                            self.photoView.startPlayback(with: .hint)
+//                        }
+//                    })
+//                }
             }
         }
     }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,8 +70,10 @@ class PhotoCell: UICollectionViewCell {
     }
     
     @objc func handleZoomTap(tapGesture: UITapGestureRecognizer) {
+        guard let asset = asset else { return }
+        
         if let imageView = tapGesture.view as? UIImageView {
-            self.parentController?.performZoomInForStartingImageView(startingImageView: imageView)
+            self.parentController?.performZoomInForStartingImageView(startingImageView: imageView, asset: asset)
         }
     }
     

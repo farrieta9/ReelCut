@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import PhotosUI
 
 class RootController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -59,6 +60,13 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return iv
     }()
     
+    let livePhotoView: PHLivePhotoView = {
+        let photoView = PHLivePhotoView()
+        photoView.contentMode = .scaleAspectFit
+        photoView.isUserInteractionEnabled = true
+        return photoView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,18 +77,12 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         view.addSubview(reelCutImageView)
         view.addSubview(permissionLabel)
-        //        view.addSubview(loadingIndicator)
         
         // x, y, width, height
         reelCutImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         reelCutImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         reelCutImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         reelCutImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        //        loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        //        loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        //        loadingIndicator.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        //        loadingIndicator.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
         permissionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         permissionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -138,37 +140,82 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         reelCutImageView.isHidden = true
     }
     
-    func performZoomInForStartingImageView(startingImageView: UIImageView) {
+    func performZoomInForStartingImageView(startingImageView: UIImageView, asset: PHAsset) {
         
         if isViewingPhoto { return }
+        
+        var isLivePhoto: Bool = false
+        let targetSize = CGSize(width: 350, height: 350)
+        
+        let options = PHLivePhotoRequestOptions()
+        options.deliveryMode = .opportunistic
+        
+        PHImageManager.default().requestLivePhoto(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (livePhoto, info) in
+            if let livePhoto = livePhoto {
+                self.livePhotoView.livePhoto = livePhoto
+                self.livePhotoView.startPlayback(with: .full)
+                isLivePhoto = true
+            }
+        })
         
         isViewingPhoto = true
         self.startingImageView = startingImageView
         self.startingImageView?.isHidden = true
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
-        let zoomingImageView = UIImageView(frame: startingFrame!)
         
-        zoomingImageView.image = startingImageView.image
-        zoomingImageView.isUserInteractionEnabled = true
-        zoomingImageView.contentMode = .scaleAspectFit
-        zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-        if let keyWindow = UIApplication.shared.keyWindow {
+        
+        
+        if isLivePhoto {
+            livePhotoView.frame = startingFrame!
+//            livePhotoView.isUserInteractionEnabled = true
+//            livePhotoView.contentMode = .scaleAspectFit
+            livePhotoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             
-            blackBackGroundView = UIView(frame: keyWindow.frame)
-            blackBackGroundView?.backgroundColor = .black
-            blackBackGroundView?.alpha = 0
-            
-            keyWindow.addSubview(blackBackGroundView!)
-            keyWindow.addSubview(zoomingImageView)
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                self.blackBackGroundView!.alpha = 1
+            if let keyWindow = UIApplication.shared.keyWindow {
                 
-                // Make the image fill up the screen
-                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
-                zoomingImageView.center = keyWindow.center
+                blackBackGroundView = UIView(frame: keyWindow.frame)
+                blackBackGroundView?.backgroundColor = .black
+                blackBackGroundView?.alpha = 0
                 
-            }, completion: nil)
+                keyWindow.addSubview(blackBackGroundView!)
+                keyWindow.addSubview(livePhotoView)
+                
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self.blackBackGroundView!.alpha = 1
+                    
+                    // Make the image fill up the screen
+                    self.livePhotoView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
+                    self.livePhotoView.center = keyWindow.center
+                    
+                }, completion: nil)
+            }
+            
+        } else {
+            let zoomingImageView = UIImageView(frame: startingFrame!)
+            zoomingImageView.image = startingImageView.image
+            zoomingImageView.isUserInteractionEnabled = true
+            zoomingImageView.contentMode = .scaleAspectFit
+            zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            if let keyWindow = UIApplication.shared.keyWindow {
+                
+                blackBackGroundView = UIView(frame: keyWindow.frame)
+                blackBackGroundView?.backgroundColor = .black
+                blackBackGroundView?.alpha = 0
+                
+                //            keyWindow.addSubview(livePhotoView)
+                keyWindow.addSubview(blackBackGroundView!)
+                keyWindow.addSubview(zoomingImageView)
+                //            keyWindow.addSubview(livePhotoView)
+                
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self.blackBackGroundView!.alpha = 1
+                    
+                    // Make the image fill up the screen
+                    zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
+                    zoomingImageView.center = keyWindow.center
+                    
+                }, completion: nil)
+            }
         }
     }
     
@@ -408,6 +455,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.shouldScrollToItem = true
+            
             self.beginLoadingPhotoAnimation()
         })
     }
@@ -421,12 +469,23 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             blackBackGroundView?.alpha = 0
             keyWindow.addSubview(blackBackGroundView!)
             self.startLoadingAnimation()
+            
+//            let indexPath = IndexPath(item: self.images.count - 1, section: 0)
+//            if let cell = self.collectionView?.cellForItem(at: indexPath) as? PhotoCell {
+//                self.setBlurOnImage(cell: cell)
+//            }
+            
+            //        let blurEffect = UIBlurEffect(style: .dark)
+            //        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //        blurEffectView.frame = cell.bounds
+            //        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            //        cell.addSubview(blurEffectView)
+            
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 self.blackBackGroundView?.alpha = 0.25
                 
             }, completion: { (completed: Bool) in
-                
                 
                 self.images.removeAll()
                 self.assets.removeAll()
@@ -447,8 +506,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.blackBackGroundView?.alpha = 0
         }) { (completed: Bool) in
-            //            self.loadingIndicator.stopAnimating()
-   
+            
         }
     }
     
@@ -507,7 +565,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 height = image.size.height / image.size.width * width
             }
             
-            
         } else {
             width = view.frame.width
             if image.size.width < image.size.height {
@@ -531,6 +588,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 print("reached end of photos")
                 return
             }
+            
             fetchMorePhotos()
         }
         
@@ -538,6 +596,17 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             addPhotoToTopOfStack()
         }
     }
+    
+    var cellsWithBlurEffect: [PhotoCell] = []
+    
+//    func setBlurOnImage(cell: PhotoCell) {
+//        let blurEffect = UIBlurEffect(style: .dark)
+//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = cell.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        cell.addSubview(blurEffectView)
+//        cellsWithBlurEffect.append(cell)
+//    }
 }
 
 
