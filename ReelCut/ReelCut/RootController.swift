@@ -133,30 +133,28 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         if isViewingPhoto { return }
         
         var isLivePhoto: Bool = false
-        let targetSize = CGSize(width: 350, height: 350)
-        
-        let options = PHLivePhotoRequestOptions()
-        options.deliveryMode = .opportunistic
-        
-        PHImageManager.default().requestLivePhoto(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (livePhoto, info) in
-            if let livePhoto = livePhoto {
-                self.livePhotoView.livePhoto = livePhoto
-                self.livePhotoView.startPlayback(with: .full)
-                isLivePhoto = true
-            }
-        })
+        if asset.mediaSubtypes.contains(PHAssetMediaSubtype.photoLive) {
+            let targetSize = CGSize(width: 350, height: 350)
+            
+            let options = PHLivePhotoRequestOptions()
+            options.deliveryMode = .opportunistic
+            
+            PHImageManager.default().requestLivePhoto(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (livePhoto, info) in
+                if let livePhoto = livePhoto {
+                    self.livePhotoView.livePhoto = livePhoto
+                    self.livePhotoView.startPlayback(with: .full)
+                    isLivePhoto = true
+                }
+            })
+        }
         
         isViewingPhoto = true
         self.startingImageView = startingImageView
         self.startingImageView?.isHidden = true
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
         
-        
-        
         if isLivePhoto {
             livePhotoView.frame = startingFrame!
-//            livePhotoView.isUserInteractionEnabled = true
-//            livePhotoView.contentMode = .scaleAspectFit
             livePhotoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             
             if let keyWindow = UIApplication.shared.keyWindow {
@@ -235,8 +233,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     private func fetchPhotos() {
-        //        beginLoadingAnimation()
-        //        loadingIndicator.startAnimating()
         
         let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
@@ -313,7 +309,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.addGestureRecognizer(swipeGesture)
         }
         
-        cell.imageView.image = images[indexPath.item]
+//        cell.imageView.image = images[indexPath.item]
         cell.parentController = self
         cell.asset = assets[indexPath.item]
         
