@@ -36,19 +36,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         label.textColor = UIColor(white: 0.1, alpha: 0.5)
         return label
     }()
-    
-    //    let loadingIndicator: UIActivityIndicatorView = {
-    //        let view = UIActivityIndicatorView()
-    //        view.clipsToBounds = true
-    //        view.activityIndicatorViewStyle = .whiteLarge
-    //        view.hidesWhenStopped = true
-    //        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
-    //        view.translatesAutoresizingMaskIntoConstraints = false
-    //        view.layer.cornerRadius = 10
-    //
-    //        return view
-    //    }()
-    
+
     let reelCutImageView: UIImageView = {
         let image = UIImage(named: "transparent-reelcut-1000x1000.png")
         let iv = UIImageView(image: image)
@@ -264,21 +252,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             reachedBottomOfPhotos = false
         }
         
-//        let indexSet = IndexSet(startIndex...endIndex - 1)
-//        allPhotos.enumerateObjects(at: indexSet, options: .concurrent) { (asset, count, stop) in
-//            let imageManager = PHImageManager.default()
-//            let targetSize = CGSize(width: 10, height: 10)
-//            let options = PHImageRequestOptions()
-//            options.isSynchronous = true
-//            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
-//                if let image = image {
-//                    self.images.append(image)
-//                    self.assets.append(asset)
-//                }
-//            })
-//        }
-//        reloadCollectionView()
-        
         DispatchQueue.global(qos: .background).async {
             let imageManager = PHImageManager.default()
             let targetSize = CGSize(width: 10, height: 10)
@@ -300,57 +273,10 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    
-    //    private func fetchPhotos() {
-    //
-    //        if isFinishedPaging {
-    //            return
-    //        }
-    //
-    //        let mediaType = PHAssetMediaType.image
-    //        let allPhotos = PHAsset.fetchAssets(with: mediaType, options: assetsFetchOptions())
-    //
-    //        if allPhotos.count <= 0 {
-    //            return
-    //        }
-    //
-    //        endIndex = min(endIndex, allPhotos.count)
-    //
-    //        print("Start index -> \(startIndex) && End index -> \(endIndex)")
-    //
-    //        if endIndex >= allPhotos.count - 1 {
-    //            isFinishedPaging = true
-    //            endIndex = allPhotos.count - 1
-    //        }
-    //
-    //        let indexSet = IndexSet(startIndex...endIndex)
-    //        allPhotos.enumerateObjects(at: indexSet, options: .concurrent) { (asset, count, stop) in
-    //            let imageManager = PHImageManager.default()
-    //            let targetSize = CGSize(width: 10, height: 10)
-    //
-    //            let options = PHImageRequestOptions()
-    //            options.isSynchronous = true
-    //
-    //            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
-    //
-    //                if let image = image {
-    //                    self.images.append(image)
-    //                    self.assets.append(asset)
-    //                }
-    //            })
-    //        }
-    //
-    //        DispatchQueue.main.async {
-    //            self.collectionView?.reloadData()
-    //        }
-    //
-    //    }
-    
     func reloadCollectionView() {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
             self.endLoadingAnimation()
-//            self.loadingIndicator.stopAnimating()
         }
     }
     
@@ -362,7 +288,6 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.permissionLabel.isHidden = false
                 break
             case .authorized:
-//                self.loadingIndicator.startAnimating()
                 self.fetchPhotos()
             }
         }
@@ -469,18 +394,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             blackBackGroundView?.alpha = 0
             keyWindow.addSubview(blackBackGroundView!)
             self.startLoadingAnimation()
-            
-//            let indexPath = IndexPath(item: self.images.count - 1, section: 0)
-//            if let cell = self.collectionView?.cellForItem(at: indexPath) as? PhotoCell {
-//                self.setBlurOnImage(cell: cell)
-//            }
-            
-            //        let blurEffect = UIBlurEffect(style: .dark)
-            //        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //        blurEffectView.frame = cell.bounds
-            //        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            //        cell.addSubview(blurEffectView)
-            
+
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 self.blackBackGroundView?.alpha = 0.25
@@ -597,16 +511,8 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
-    var cellsWithBlurEffect: [PhotoCell] = []
     
-//    func setBlurOnImage(cell: PhotoCell) {
-//        let blurEffect = UIBlurEffect(style: .dark)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = cell.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        cell.addSubview(blurEffectView)
-//        cellsWithBlurEffect.append(cell)
-//    }
+    
+    
+    
 }
-
-
