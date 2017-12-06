@@ -296,7 +296,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return assets.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -309,7 +309,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.addGestureRecognizer(swipeGesture)
         }
         
-//        cell.imageView.image = images[indexPath.item]
+        cell.imageView.image = images[indexPath.item]
         cell.parentController = self
         cell.asset = assets[indexPath.item]
         
@@ -364,9 +364,9 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.images.removeLast()
                 self.assets.removeLast()
                 self.endIndex -= 1
-                print("photo count \(self.images.count)")
+                print("photo count \(self.assets.count)")
                 
-                let indexOfBottomCell = IndexPath(item: self.images.count - 1, section: 0)
+                let indexOfBottomCell = IndexPath(item: self.assets.count - 1, section: 0)
                 self.collectionView?.deleteItems(at: [indexOfBottomCell])
             }
         })
@@ -478,7 +478,7 @@ class RootController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } else {
             width = view.frame.width
             if image.size.width < image.size.height {
-                //                height = view.frame.height / 2 - 40
+                // height = view.frame.height / 2 - 40
                 height = view.frame.height / 2
                 
             } else {
